@@ -1,0 +1,129 @@
+<!doctype HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Solar System</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/jeromeetienne/AR.js/2.0.5/aframe/build/aframe-ar.js"></script>
+  <style>
+    #start-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 30px;
+    }
+
+    #start-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 20px 40px;
+      font-size: 22px;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    a-scene {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="start-screen">
+    <button id="start-btn" onclick="startAR()">Start AR</button>
+  </div>
+
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+
+    <a-marker preset="hiro">
+
+      <a-sphere position="0 1.5 -3" radius="0.3" color="#FFD700" segments-height="24" segments-width="24" animation="property: rotation; to: 0 360 0; loop: true; dur: 8000"></a-sphere>
+
+      <a-ring position="0 1.5 -3" rotation="90 0 0" radius-inner="0.8" radius-outer="0.82" color="#000"></a-ring>
+      <a-ring position="0 1.5 -3" rotation="90 0 0" radius-inner="1.2" radius-outer="1.22" color="#000"></a-ring>
+      <a-ring position="0 1.5 -3" rotation="90 0 0" radius-inner="1.6" radius-outer="1.62" color="#000"></a-ring>
+      <a-ring position="0 1.5 -3" rotation="90 0 0" radius-inner="2.0" radius-outer="2.02" color="#000"></a-ring>
+      <a-ring position="0 1.5 -3" rotation="90 0 0" radius-inner="2.6" radius-outer="2.62" color="#000"></a-ring>
+      <a-ring position="0 1.5 -3" rotation="90 0 0" radius-inner="3.2" radius-outer="3.22" color="#000"></a-ring>
+      <a-ring position="0 1.5 -3" rotation="90 0 0" radius-inner="3.8" radius-outer="3.82" color="#000"></a-ring>
+
+      <a-entity id="mercury" position="0.8 1.5 -3">
+        <a-sphere radius="0.04" color="#FF6347"></a-sphere>
+      </a-entity>
+
+      <a-entity id="venus" position="1.2 1.5 -3">
+        <a-sphere radius="0.07" color="#1E90FF"></a-sphere>
+      </a-entity>
+
+      <a-entity id="earth" position="1.6 1.5 -3">
+        <a-sphere radius="0.09" color="#1E90FF"></a-sphere>
+      </a-entity>
+
+      <a-entity id="mars" position="2.0 1.5 -3">
+        <a-sphere radius="0.08" color="#FF4500"></a-sphere>
+      </a-entity>
+
+      <a-entity id="jupiter" position="2.6 1.5 -3">
+        <a-sphere radius="0.12" color="#FFD700"></a-sphere>
+      </a-entity>
+
+      <a-entity id="saturn" position="3.2 1.5 -3">
+        <a-sphere radius="0.11" color="#F4A300"></a-sphere>
+      </a-entity>
+
+      <a-entity id="uranus" position="3.8 1.5 -3">
+        <a-sphere radius="0.09" color="#4B0082"></a-sphere>
+      </a-entity>
+
+      <a-entity id="neptune" position="4.4 1.5 -3">
+        <a-sphere radius="0.1" color="#0000FF"></a-sphere>
+      </a-entity>
+
+    </a-marker>
+
+    <a-entity camera position="0 0 5"></a-entity>
+
+  </a-scene>
+
+  <script>
+    function startAR() {
+      document.getElementById('start-screen').style.display = 'none'; // скрытие стартового экрана
+      document.querySelector('a-scene').style.display = 'block'; // показ AR-сцены
+    }
+
+    function animatePlanet(planetId, radius, speed) {
+      const planet = document.querySelector(`#${planetId}`);
+      let angle = 0;
+
+      function animate() {
+        angle += speed;
+        const x = radius * Math.cos(angle);
+        const z = radius * Math.sin(angle);
+        planet.setAttribute("position", `${x} 1.5 ${z}`);
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+
+    animatePlanet("mercury", 0.8, 0.02); // Меркурий
+    animatePlanet("venus", 1.2, 0.015); // Венера
+    animatePlanet("earth", 1.6, 0.01); // Земля
+    animatePlanet("mars", 2.0, 0.008); // Марс
+    animatePlanet("jupiter", 2.6, 0.006); // Юпитер
+    animatePlanet("saturn", 3.2, 0.004); // Сатурн
+    animatePlanet("uranus", 3.8, 0.003); // Уран
+    animatePlanet("neptune", 4.4, 0.002); // Нептун
+  </script>
+
+</body>
+</html>

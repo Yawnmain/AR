@@ -1,0 +1,46 @@
+<!doctype HTML>
+<html>
+<head>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.0.1/aframe/build/aframe-ar.min.js"></script>
+</head>
+<body style="margin: 0px; overflow: hidden;">
+
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;">
+    
+    <a-entity id="camera" camera position="0 1.6 0"></a-entity>
+    <!-- Объект, который будет подгружен при приближении камеры -->
+    <a-box id="dynamicBox" color="red" position="0 1 -10" visible="false"></a-box>
+
+    <a-entity camera></a-entity>
+
+  </a-scene>
+
+  <script>
+    const camera = document.querySelector('#camera');
+    const dynamicBox = document.querySelector('#dynamicBox');
+
+    const loadDistance = 5;  // Дистанция, при которой объект появляется
+
+    function checkProximity() {
+      const cameraPosition = camera.getAttribute('position');
+      const boxPosition = dynamicBox.getAttribute('position');
+
+      const distance = Math.sqrt(
+        Math.pow(cameraPosition.x - boxPosition.x, 2) +
+        Math.pow(cameraPosition.y - boxPosition.y, 2) +
+        Math.pow(cameraPosition.z - boxPosition.z, 2)
+      );
+
+      if (distance < loadDistance) {
+        dynamicBox.setAttribute('visible', 'true');
+      } else {
+        dynamicBox.setAttribute('visible', 'false');
+      }
+    }
+
+    setInterval(checkProximity, 100);
+  </script>
+
+</body>
+</html>

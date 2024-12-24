@@ -1,0 +1,24 @@
+<!doctype HTML>
+<html>
+<head>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.0.1/aframe/build/aframe-ar.min.js"></script>
+</head>
+<body style='margin: 0px; overflow: hidden;'>
+  <a-scene embedded arjs>
+
+    <a-marker preset="hiro">
+      <!-- Точечный свет -->
+      <a-light type="point" position="2 2 2" intensity="1" color="#fff" decay="2" distance="10"></a-light>
+      <!-- Направленный свет -->
+      <a-light type="directional" position="5 5 5" intensity="0.5" color="#ff0000"></a-light>
+      <!-- Окружной свет -->
+      <a-light type="ambient" color="#ffffff" intensity="0.3"></a-light>
+
+      <a-box position="0 1 0" rotation="0 45 0" color="blue" depth="1" width="1" height="1"></a-box>
+    </a-marker>
+
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+</html>
